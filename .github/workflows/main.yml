@@ -1,0 +1,39 @@
+name: CI/CD Pipeline for Docker Project
+
+# Run this workflow on pushes to the 'main' branch
+on:
+  push:
+    branches:
+      - main
+
+# Define the jobs to run
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code from the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Log in to Docker Hub using GitHub Secrets
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      # Step 3: Build the Docker image
+      - name: Build Docker Image
+        run: docker build -t sravaj/sample-nodejs-autoscale-loadbalance .
+
+      # Step 4: Push the Docker image to Docker Hub
+      - name: Push Docker Image
+        run: docker push sravaj/sample-nodejs-autoscale-loadbalance
+
+      # Optional Step 5: Deploy to a server or cloud service
+      - name: Deploy to Server
+        env:
+          DOCKER_HOST: <your-server-docker-host>  # Set the server's Docker host if needed
+        run: |
+          docker pull sravaj/sample-nodejs-autoscale-loadbalance
+          docker stop app || true
+          docker rm app || true
+          docker run -d --name app -p 3000:3000 sravaj/sample-nodejs-autoscale-loadbalance
