@@ -9,7 +9,7 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Docker image
-        run: docker build -t sample-nodejs-autoscale-loadbalance .
+        run: docker build -t sravyaj/sample:latest .
 
       - name: Push Docker image
-        run: docker push sample-nodejs-autoscale-loadbalance:latest
+        run: docker push sravyaj/sample:latest
