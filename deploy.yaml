@@ -13,3 +13,6 @@ jobs:
 
       - name: Push Docker image
         run: docker push sravyaj/sample:latest
+
+      - name: Verify Docker login (debugging)
+        run: docker info
