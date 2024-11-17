@@ -22,11 +22,11 @@ jobs:
 
       # Step 3: Build the Docker image
       - name: Build Docker Image
-        run: docker build -t sravaj/sample-nodejs-autoscale-loadbalance .
+        run: docker build -t sravaj/sample:latest .
 
       # Step 4: Push the Docker image to Docker Hub
       - name: Push Docker Image
-        run: docker push sravaj/sample-nodejs-autoscale-loadbalance
+        run: docker push sravaj/sample:latest
 
       # Optional Step 5: Deploy to a server or cloud service
       - name: Deploy to Server
